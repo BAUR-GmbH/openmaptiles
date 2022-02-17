@@ -50,8 +50,17 @@ if [ $# -eq 0 ]; then
   export area=albania
   echo "No parameter - set area=$area "
 else
-  export area=$1
+  # Split into area and bbox
+  IFS=';' read area bbox <<< $1
+  export area="$area"
 fi
+
+echo "Area:"
+echo $area
+echo "Box:"
+echo $bbox
+echo "Input:"
+echo "$1"
 
 if [ $# -eq 2 ]; then
   osm_server=$2
@@ -172,6 +181,16 @@ echo " "
 echo "-------------------------------------------------------------------------------------"
 echo "====> : Downloading ${area} from ${osm_server:-any source}..."
 make "download${osm_server:+-${osm_server}}"
+
+# Set custom bbox file from our area list
+if [ -z "$bbox" ]
+ then 
+    echo "Using default bbox from .env"
+ else 
+    echo "Setting custom bbox."
+    rm /home/mappy/openmaptiles/data/"$area".bbox
+    echo $bbox >> /home/mappy/openmaptiles/data/"$area".bbox; 
+fi
 
 echo " "
 echo "-------------------------------------------------------------------------------------"
