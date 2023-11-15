@@ -183,13 +183,13 @@ echo "====> : Downloading ${area} from ${osm_server:-any source}..."
 make "download${osm_server:+-${osm_server}}"
 
 # Set custom bbox file from our area list
-rm -f /home/mappy/openmaptiles/data/"$area".bbox 
+rm -f "./data/${area}.bbox" 
 if [ -z "$bbox" ]
  then 
     echo "Using default bbox from .env"
  else 
     echo "Setting custom bbox." 
-    echo $bbox > /home/mappy/openmaptiles/data/"$area".bbox;
+    echo $bbox > "./data/${area}.bbox"
 fi
 
 echo " "
