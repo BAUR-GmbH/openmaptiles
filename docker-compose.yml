@@ -68,6 +68,9 @@ services:
       - ./build:/mapping
       - ./cache:/cache
       - ./style:/style
+    dns:
+      - 192.168.168.23
+      - 192.168.168.25
 
   update-osm:
     <<: *openmaptiles-tools
